@@ -1,0 +1,21 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t intermezzolt/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true intermezzolt/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t intermezzolt/multi-client ./client
+  - docker build -t intermezzolt/multi-nginx ./multi-nginx
+  - docker build -t intermezzolt/multi-server ./multi-server
+  - docker build -t intermezzolt/multi-worker ./worker
+  # push to docker hub
+  - echo "DOCKER_PASSWORD" | docker login -u "DOCKER_ID" --password-stdin
+  - docker push intermezzolt/multi-client
+  - docker push intermezzolt/multi-nginx
+  - docker push intermezzolt/multi-server
+  - docker push intermezzolt/multi-worker
