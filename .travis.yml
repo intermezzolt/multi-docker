@@ -14,7 +14,7 @@ after_success:
   - docker build -t intermezzolt/multi-server ./multi-server
   - docker build -t intermezzolt/multi-worker ./worker
   # push to docker hub
-  - echo "DOCKER_PASSWORD" | docker login -u "DOCKER_ID" --password-stdin
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   - docker push intermezzolt/multi-client
   - docker push intermezzolt/multi-nginx
   - docker push intermezzolt/multi-server
