@@ -10,8 +10,8 @@ script:
 
 after_success:
   - docker build -t mmiskinis/multi-client ./client
-  - docker build -t mmiskinis/multi-nginx ./multi-nginx
-  - docker build -t mmiskinis/multi-server ./multi-server
+  - docker build -t mmiskinis/multi-nginx ./nginx
+  - docker build -t mmiskinis/multi-server ./server
   - docker build -t mmiskinis/multi-worker ./worker
   # push to docker hub
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
